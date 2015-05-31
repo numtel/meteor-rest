@@ -22,10 +22,18 @@ JsonRoutes.routes = [];
 // Save reference to router for later
 var connectRouter;
 
+// Error middleware must be added last, to catch errors from prior middleware
+JsonRoutes.errorMiddleware = connect();
+WebApp.rawConnectHandlers.use(JsonRoutes.errorMiddleware);
+
 // Register as a middleware
 WebApp.rawConnectHandlers.use(connectRoute(function (router) {
   connectRouter = router;
 }));
+
+
+// TODO Add error handling middleware here, so connect errors can be triggered
+// TODO from endpoints (currently only works if triggered from other middleware)
 
 JsonRoutes.add = function (method, path, handler) {
   // Make sure path starts with a slash

@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'simple:json-routes',
-  version: '1.0.3',
+  name: 'simple:rest-json-error-handler',
+  version: '0.0.1',
   // Brief, one-line summary of the package.
-  summary: 'The simplest way to define server-side routes that return JSON',
+  summary: 'simple:rest middleware for handling standard Connect errors',
   // URL to the Git repository containing the source code for this package.
   git: 'https://github.com/stubailo/meteor-rest',
   // By default, Meteor will default to using README.md for documentation.
@@ -10,28 +10,16 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Npm.depends({
-  connect: '2.11.0',
-  'connect-route': '0.1.5'
-});
-
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
-  api.use([
-    'webapp',
-    'underscore'
-  ], 'server');
-  api.addFiles('json-routes.js', 'server');
-  api.addFiles('middleware.js', "server");
-
-  api.export('JsonRoutes', 'server');
-  api.export('RestMiddleware');
+  api.use('simple:json-routes@1.0.3');
+  api.addFiles('json_error_handler.js', 'server');
 });
 
 Package.onTest(function(api) {
   api.use('tinytest');
   api.use('test-helpers');
-  api.use('simple:json-routes');
-  api.use('http');
-  api.addFiles('json-routes-tests.js');
+  api.use('simple:json-routes@1.0.3');
+  api.use('simple:rest-json-error-handler');
+  api.addFiles('json_error_handler_tests.js');
 });
